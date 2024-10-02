@@ -1,0 +1,22 @@
+<div class="game-container">
+  <div class="player-grid">
+    <div class="player" *ngFor="let player of players; let i = index" [class.active]="currentPlayerIndex === i">
+      <div class="score-display">
+        <h1>{{ currentScore }}</h1> <!-- Current score for the active player -->
+        <p class="player-name">{{ player.name }}</p>
+        <p class="legs-sets">
+          Legs: {{ player.legs }} | Sets: {{ player.sets }} <!-- Display legs and sets -->
+        </p>
+      </div>
+      <div class="score-input" [ngClass]="{ 'hidden': currentPlayerIndex !== i }">
+        <input type="number" [(ngModel)]="currentScoreInput" placeholder="Enter score" />
+        <button (click)="addScore(i)">Add Score</button> <!-- Button to add the score -->
+        <button (click)="undoLastScore()" [disabled]="!lastScoreAdded">Undo</button> <!-- Button to undo the last score -->
+      </div>
+      <ul class="score-list">
+        <li *ngFor="let score of player.scores">{{ score }}</li> <!-- List of previous scores -->
+      </ul>
+    </div>
+  </div>
+</div>
+
