@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
 export class GameSetupComponent {
   gameScores = [101, 301, 501, 701, 1001];
   selectedScore = 301; // Default game type
-  selectedSet = 'noSets'; // Default set option
-  selectedLegs = '21'; // Default legs option
+  selectedSet = '0'; // Default set option
+  selectedLegs = '3'; // Default legs option
 
   players = [{ name: 'Player 1' }, { name: 'Player 2' }]; // Default 2 players
 

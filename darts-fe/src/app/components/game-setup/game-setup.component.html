@@ -17,16 +17,21 @@
   <div class="sets-legs">
     <label for="sets">Sets</label>
     <select id="sets" [(ngModel)]="selectedSet">
-      <option value="noSets">No sets</option>
-      <option value="bestOf5">Best of 5</option>
-      <option value="bestOf7">Best of 7</option>
+      <option value="0">No sets</option>
+      <option value="3">Race to 3</option>
+      <option value="5">Race to 5</option>
+      <option value="7">Race to 7</option>
     </select>
 
     <label for="legs">Legs</label>
     <select id="legs" [(ngModel)]="selectedLegs">
-      <option value="21">21 legs</option>
-      <option value="15">15 legs</option>
+      <option value="3">3 legs</option>
+      <option value="5">5 legs</option>
+      <option value="7">7 legs</option>
+      <option value="9">9 legs</option>
       <option value="11">11 legs</option>
+      <option value="15">15 legs</option>
+      <option value="21">21 legs</option>
     </select>
   </div>
 
