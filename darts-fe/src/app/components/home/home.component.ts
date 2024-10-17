@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
 
   startGame() {
     // Navigate to the game component, assuming you have a route for it
-    this.router.navigate(['/game']);
+    this.router.navigate(['/game-setup']);
   }
 
   ngOnInit(): void {

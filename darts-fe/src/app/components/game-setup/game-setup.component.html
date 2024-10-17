@@ -1,0 +1,53 @@
+<div class="game-setup-container">
+  <h2>Game Setup</h2>
+
+  <!-- Game Type Selection -->
+  <div class="game-type">
+    <label>Game Type</label>
+    <div class="game-type-options">
+      <button *ngFor="let score of gameScores"
+              (click)="setStartingScore(score)"
+              [ngClass]="{'active': score === selectedScore}">
+        {{ score }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Sets and Legs (optional - remove if not needed) -->
+  <div class="sets-legs">
+    <label for="sets">Sets</label>
+    <select id="sets" [(ngModel)]="selectedSet">
+      <option value="0">No sets</option>
+      <option value="3">Race to 3</option>
+      <option value="5">Race to 5</option>
+      <option value="7">Race to 7</option>
+    </select>
+
+    <label for="legs">Legs</label>
+    <select id="legs" [(ngModel)]="selectedLegs">
+      <option value="3">3 legs</option>
+      <option value="5">5 legs</option>
+      <option value="7">7 legs</option>
+      <option value="9">9 legs</option>
+      <option value="11">11 legs</option>
+      <option value="15">15 legs</option>
+      <option value="21">21 legs</option>
+    </select>
+  </div>
+
+  <!-- Player Information -->
+  <div class="player-info">
+    <h3>{{ players.length }} Players</h3>
+    <div *ngFor="let player of players; let i = index">
+      <label>Player {{ i + 1 }} name</label>
+      <input type="text" [(ngModel)]="player.name" [placeholder]="'Player ' + (i + 1) + ' name'">
+      <button *ngIf="players.length > 2" class="remove-btn" (click)="removePlayer(i)">-</button>
+    </div>
+
+    <button class="add-player" (click)="addPlayer()">+ Add new player</button>
+  </div>
+
+  <!-- Start Game Button -->
+  <button class="start-game-btn" (click)="startGame()">START GAME</button>
+</div>
+
