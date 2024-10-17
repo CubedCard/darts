@@ -6,8 +6,7 @@ interface Player {
   legs: number;
   sets: number;
   scores: number[];
-  currentScore: number;
-  average: number;
+  currentScore: number; average: number;
 }
 
 @Component({
@@ -30,7 +29,6 @@ export class GameComponent implements OnInit {
   legsPlayed: number = 0; // Number of legs played
 
   @ViewChildren('playerInput') playerInputs!: QueryList<ElementRef>;
-
 
   constructor(private route: ActivatedRoute,
              private router: Router) {}
@@ -56,47 +54,51 @@ export class GameComponent implements OnInit {
   }
 
   addScore(playerIndex: number) {
-    if (this.currentScoreInput) {
-      if (this.currentScoreInput > this.players[playerIndex].currentScore
-         || this.currentScoreInput > this.MAX_SCORE
-         || this.currentScoreInput < this.MIN_SCORE) {
-        return;
-      }
+    if (this.currentScoreInput > this.MAX_SCORE
+       || this.currentScoreInput < this.MIN_SCORE) {
+      return;
+    }
 
-      // Add score to the current player's score list
-      this.players[playerIndex].scores.push(this.currentScoreInput);
-      this.lastScoreAdded.push({ playerIndex, score: this.currentScoreInput }); // Save last added score
-      this.currentScoreInput = 0; // Reset input
-      this.updateCurrentScore(); // Update current score
+    if (this.currentScoreInput > this.players[playerIndex].currentScore) {
+      this.currentScoreInput = 0; // bust
+    }
 
-      // Check if the player has won
-      if (this.players[playerIndex].currentScore === 0) {
-        this.players[playerIndex].legs++;
-        if (this.players[playerIndex].legs === this.selectedLegs) {
+    // Add score to the current player's score list
+    this.players[playerIndex].scores.push(this.currentScoreInput);
+    this.lastScoreAdded.push({ playerIndex, score: this.currentScoreInput }); // Save last added score
+    this.currentScoreInput = 0; // Reset input
+    this.updateCurrentScore(); // Update current score
+
+    // Check if the player has won
+    if (this.players[playerIndex].currentScore === 0) {
+      this.players[playerIndex].legs++;
+      if (this.players[playerIndex].legs === this.selectedLegs) {
+        if (this.selectedSets > 0) {
           this.players[playerIndex].sets++;
-          if (this.selectedSets > 0) {
-            if (this.players[playerIndex].sets === this.selectedSets) {
-              // Player has won
-              alert(`${this.players[playerIndex].name} has won the game!`);
-              this.router.navigate(['/game-setup']);
-            } else {
-              // Reset legs
-              this.players.forEach(player => player.legs = 0);
-            }
+          if (this.players[playerIndex].sets === this.selectedSets) {
+            // Player has won
+            alert(`${this.players[playerIndex].name} has won the game!`);
+            this.router.navigate(['/game-setup']);
+          } else {
+            // Reset legs
+            this.players.forEach(player => player.legs = 0);
           }
+        } else {
+          alert(`${this.players[playerIndex].name} has won the game!`);
+          this.router.navigate(['/game-setup']);
         }
+      }
 
-        // Reset scores
-        this.players.forEach(player => player.scores = []);
-        this.currentScore = this.selectedScore; // Reset current score
-        this.currentPlayerIndex = 0; // Reset player index
-        this.legsPlayed++;
-        this.players.forEach(player => player.currentScore = this.selectedScore); // Reset current score for all players
-        this.currentPlayerIndex = this.legsPlayed % this.players.length; // Move to next player
-      }
-      else {
-        this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length; // Move to next player
-      }
+      // Reset scores
+      this.players.forEach(player => player.scores = []);
+      this.currentScore = this.selectedScore; // Reset current score
+      this.currentPlayerIndex = 0; // Reset player index
+      this.legsPlayed++;
+      this.players.forEach(player => player.currentScore = this.selectedScore); // Reset current score for all players
+      this.currentPlayerIndex = this.legsPlayed % this.players.length; // Move to next player
+    }
+    else {
+      this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length; // Move to next player
     }
 
     setTimeout(() => this.focusNextPlayerInput(), 0);

@@ -9,8 +9,7 @@
         </p>
       </div>
       <div class="score-input" [ngClass]="{ 'hidden': currentPlayerIndex !== i }">
-        <input #playerInput type="number" [(ngModel)]="currentScoreInput" placeholder="Enter score" min="0" max="180"
-                                                                                                            (keyup.enter)="addScore(i)" autofocus />
+        <input #playerInput type="number" [(ngModel)]="currentScoreInput" placeholder="Enter score" min="0" max="180" (keyup.enter)="addScore(i)" autofocus />
         <div>
           <button (click)="addScore(i)">Add</button>
           <button (click)="undoLastScore()" [disabled]="lastScoreAdded.length < 1">Undo</button>
